@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Sujana Car</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F2EAE0;
+  --accent:#7D5F24;
+  --rose:#9A7872;
+  --text:#261610;
+  --text2:#5E4235;
+  --card:#E9DDD0;
+  --border:rgba(125,95,36,0.2);
+  --shadow:rgba(125,95,36,0.13);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Lora',serif;overflow-x:hidden}
+
+/* ── NAV DOTS ─────────────────────────────────────────── */
+.nav-dots{position:fixed;left:20px;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:18px}
+.nav-dot{position:relative;width:10px;height:10px;border-radius:50%;background:var(--rose);opacity:.4;cursor:pointer;transition:all .3s ease;border:none;outline:none;padding:0}
+.nav-dot.active{background:var(--accent);opacity:1;animation:pulse-glow 2.2s ease-in-out infinite}
+.nav-dot:hover .tip{opacity:1;transform:translateY(-50%) translateX(0)}
+.tip{position:absolute;left:18px;top:50%;transform:translateY(-50%) translateX(-6px);background:var(--card);color:var(--text2);font-family:'Lora',serif;font-size:11px;white-space:nowrap;padding:4px 10px;border-radius:8px;box-shadow:0 2px 12px var(--shadow);opacity:0;transition:all .3s ease;pointer-events:none;border:1px solid var(--border)}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(125,95,36,.45)}55%{box-shadow:0 0 0 7px rgba(125,95,36,0)}}
+
+/* ── SECTIONS ─────────────────────────────────────────── */
+section{min-height:100vh;padding:80px 40px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+
+/* Scroll fade-in — simple and clean */
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity .8s ease-out,transform .8s ease-out}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ── SECTION 1 ─────────────────────────────────────────── */
+#s1{background:var(--bg);overflow:hidden}
+.particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.ptcl{position:absolute;bottom:-20px;animation:float-up linear infinite;opacity:0}
+@keyframes float-up{0%{transform:translateY(0) rotate(0deg);opacity:0}12%{opacity:var(--op)}88%{opacity:var(--op)}100%{transform:translateY(-110vh) rotate(15deg);opacity:0}}
+
+.env-scene{display:flex;flex-direction:column;align-items:center;gap:36px;z-index:1;width:100%;max-width:560px}
+
+/* envelope */
+.env-box{position:relative;width:300px;height:190px;perspective:700px}
+.env-body{position:absolute;bottom:0;left:0;width:300px;height:170px;background:#E8DACC;border-radius:3px 3px 10px 10px;border:1.5px solid rgba(125,95,36,.28);overflow:visible}
+.env-bottom-v{position:absolute;bottom:0;left:0;width:0;height:0;border-left:150px solid transparent;border-right:150px solid transparent;border-bottom:80px solid rgba(125,95,36,.1)}
+.env-seal{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);width:38px;height:38px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:17px;z-index:3;box-shadow:0 2px 10px rgba(125,95,36,.45);transition:opacity .5s ease .4s}
+.env-flap{position:absolute;top:0;left:0;width:0;height:0;border-left:150px solid transparent;border-right:150px solid transparent;border-top:110px solid #D8C8A8;transform-origin:top center;transition:transform .9s ease-in-out;z-index:4;filter:drop-shadow(0 3px 4px rgba(125,95,36,.2))}
+.env-flap.open{transform:rotateX(-180deg)}
+.env-card{position:absolute;bottom:12px;left:20px;right:20px;background:var(--card);border-radius:8px;padding:14px 16px;text-align:center;transform:translateY(8px);opacity:0;transition:transform .9s ease-out .7s,opacity .9s ease-out .7s;z-index:2;border:1px solid var(--border)}
+.env-card.open{transform:translateY(-72px);opacity:1}
+.env-card-text{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--accent)}
+
+/* hero text */
+.hero-text{text-align:center;opacity:0;transform:translateY(18px);transition:opacity .9s ease-out 1.3s,transform .9s ease-out 1.3s}
+.hero-text.open{opacity:1;transform:translateY(0)}
+.hero-text h1{font-family:'Great Vibes',cursive;font-size:clamp(3.2rem,7vw,5.5rem);color:var(--text);line-height:1.1;margin-bottom:14px}
+.hero-text p{font-size:clamp(.95rem,2.2vw,1.2rem);color:var(--text2);font-style:italic}
+
+/* canvas */
+.car-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;transition:opacity 1s ease-out 1.9s}
+.car-wrap.open{opacity:1}
+#carCanvas{border-radius:10px;max-width:100%;display:block}
+.car-cap{font-family:'Lora',serif;font-style:italic;font-size:.88rem;color:var(--text2)}
+
+/* ── SECTION 2 ─────────────────────────────────────────── */
+#s2{background:var(--bg)}
+.sec-head{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3.5vw,2.6rem);color:var(--text);margin-bottom:36px;text-align:center}
+.comp-grid{display:grid;grid-template-columns:minmax(130px,1.2fr) 1fr 1fr;background:var(--card);border-radius:16px;overflow:hidden;box-shadow:0 4px 36px var(--shadow);border:1px solid var(--border);width:100%;max-width:840px}
+.ch{padding:18px 14px;font-family:'Playfair Display',serif;font-size:1rem;border-bottom:2px solid var(--border)}
+.ch.cat{font-size:.82rem;color:var(--text2);font-style:italic}
+.ch.ls{background:#E6DDD4;color:var(--text);text-align:center}
+.ch.pc{background:#DDD4C4;color:var(--accent);text-align:center;border-left:3px solid rgba(125,95,36,.35)}
+.cr-cat{padding:13px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;font-size:.86rem;color:var(--text2);font-style:italic}
+.cr-cat.emo{font-size:.92rem;color:var(--text);font-style:normal;padding:16px 14px}
+.cr-ls{background:#E6DDD4;padding:13px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;font-size:.88rem}
+.cr-ls.emo{padding:16px 14px}
+.cr-pc{background:#DDD4C4;border-left:3px solid rgba(125,95,36,.22);padding:13px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;font-size:.88rem}
+.cr-pc.emo{padding:16px 14px}
+.cell-in{display:flex;flex-direction:column;width:100%}
+.cell-v{display:flex;align-items:center;flex-wrap:wrap;gap:3px}
+.mbar-w{width:100%;height:3px;background:rgba(125,95,36,.1);border-radius:2px;margin-top:5px;overflow:hidden}
+.mbar{height:100%;border-radius:2px;background:var(--accent)}
+.mbar.rs{background:var(--rose)}
+.badge{display:inline-flex;align-items:center;font-size:.68rem;padding:2px 7px;border-radius:20px;margin-left:4px;font-weight:500;white-space:nowrap;font-family:'Lora',serif}
+.bp{background:rgba(125,95,36,.16);color:var(--accent)}
+.bl{background:rgba(154,120,114,.22);color:#7A5550}
+
+/* ── SECTION 3 ─────────────────────────────────────────── */
+#s3{background:var(--bg)}
+.bars-row{display:flex;gap:52px;align-items:flex-end;justify-content:center;margin-top:8px;margin-bottom:36px}
+.bar-item{display:flex;flex-direction:column;align-items:center;gap:12px;width:130px}
+.bar-outer{width:100%;height:290px;display:flex;align-items:flex-end;overflow:hidden}
+.bar-in{width:100%;height:0;border-radius:10px 10px 0 0;transition:height 1.2s ease-out;display:flex;align-items:flex-start;justify-content:center;padding-top:10px}
+.bar-in.pc{background:linear-gradient(180deg,#9A7A38,#7D5F24)}
+.bar-in.ls{background:linear-gradient(180deg,#B09088,#9A7872)}
+.bar-lbl{font-family:'Playfair Display',serif;font-size:.88rem;color:var(--text2);text-align:center;line-height:1.4}
+.bar-amt{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.9);text-align:center;font-family:'Lora',serif;line-height:1.3}
+.callout{background:linear-gradient(135deg,#E8DECE,#DDD0B8);border:1.5px solid var(--accent);border-radius:14px;padding:20px 36px;text-align:center;max-width:460px;font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--text);box-shadow:0 4px 24px var(--shadow);margin-bottom:22px}
+.breakdown{font-size:.84rem;color:var(--text2);text-align:center;line-height:1.9;margin-bottom:28px}
+.stat-row{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
+.stat-c{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 28px;text-align:center;min-width:175px;box-shadow:0 2px 16px var(--shadow);transition:transform .3s ease,box-shadow .3s ease}
+.stat-c:hover{transform:translateY(-3px);box-shadow:0 6px 28px rgba(125,95,36,.2)}
+.stat-n{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--accent);margin-bottom:6px}
+.stat-d{font-size:.81rem;color:var(--text2);line-height:1.6}
+
+/* ── SECTION 4 ─────────────────────────────────────────── */
+#s4{background:#E8DCCC;position:relative}
+#s4::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(125,95,36,.05) 27px,rgba(125,95,36,.05) 28px);pointer-events:none}
+.letter-wrap{max-width:640px;width:100%;z-index:1;position:relative;display:flex;flex-direction:column;align-items:stretch}
+.orn{text-align:center;font-size:1.35rem;color:var(--accent);letter-spacing:14px;margin-bottom:28px}
+.letter-border{border:1px solid rgba(125,95,36,.25);border-radius:4px;padding:46px 48px;background:rgba(245,238,228,.82)}
+.letter-t{font-family:'Lora',serif;font-style:italic;font-size:1.08rem;line-height:1.95;color:var(--text)}
+.letter-t p{margin-bottom:1.35em}
+.letter-t p:last-child{margin-bottom:0}
+.letter-sig{font-family:'Playfair Display',serif;font-style:italic;font-size:.98rem;color:var(--accent);text-align:right;margin-top:28px}
+.hearts-end{position:relative;height:80px;width:100%;overflow:hidden;margin-top:8px}
+.fheart{position:absolute;bottom:-10px;animation:flt-heart linear infinite;opacity:0;color:var(--rose)}
+@keyframes flt-heart{0%{transform:translateY(0) scale(1);opacity:0}18%{opacity:.45}82%{opacity:.35}100%{transform:translateY(-90px) scale(.65);opacity:0}}
+
+/* ── RESPONSIVE ───────────────────────────────────────── */
+@media(max-width:640px){
+  section{padding:48px 16px}
+  .nav-dots{left:8px}
+  .comp-grid{grid-template-columns:minmax(100px,1fr) 1fr 1fr}
+  .ch{padding:12px 8px;font-size:.8rem}
+  .cr-cat,.cr-ls,.cr-pc{padding:10px 8px;font-size:.8rem}
+  .cr-cat.emo,.cr-ls.emo,.cr-pc.emo{padding:12px 8px}
+  .bars-row{gap:24px}
+  .bar-outer{height:220px}
+  .bar-item{width:100px}
+  .letter-border{padding:28px 22px}
+  .env-box{width:260px;height:170px}
+  .env-body{width:260px}
+  .env-flap{border-left-width:130px;border-right-width:130px;border-top-width:95px}
+  .env-bottom-v{border-left-width:130px;border-right-width:130px}
+}
+@media(max-width:400px){
+  .comp-grid{font-size:.76rem}
+  .ch{padding:10px 6px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV DOTS ─────────────────────────────────────── -->
+<nav class="nav-dots" aria-label="Section navigation">
+  <button class="nav-dot active" data-sec="s1"><span class="tip">A Note For You</span></button>
+  <button class="nav-dot" data-sec="s2"><span class="tip">The Comparison</span></button>
+  <button class="nav-dot" data-sec="s3"><span class="tip">The Real Numbers</span></button>
+  <button class="nav-dot" data-sec="s4"><span class="tip">My Heart Says</span></button>
+</nav>
+
+<!-- ── SECTION 1: HERO ─────────────────────────────── -->
+<section id="s1">
+  <div class="particles" id="particles"></div>
+
+  <div class="env-scene">
+    <div class="env-box" id="envBox">
+      <div class="env-body">
+        <div class="env-bottom-v"></div>
+        <div class="env-seal" id="envSeal">💛</div>
+        <div class="env-card" id="envCard">
+          <span class="env-card-text">for you 💛</span>
+        </div>
+      </div>
+      <div class="env-flap" id="envFlap"></div>
+    </div>
+
+    <div class="hero-text" id="heroText">
+      <h1>For Sujana</h1>
+      <p>I crunched the numbers (and some other stuff too) for youu!! </p>
+    </div>
+
+    <div class="car-wrap" id="carWrap">
+      <canvas id="carCanvas" width="320" height="160"></canvas>
+      <span class="car-cap">Driving to placement in your new Camry 🤑</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 2: COMPARISON ────────────────────────── -->
+<section id="s2">
+  <div style="width:100%;max-width:840px;display:flex;flex-direction:column;align-items:center">
+    <h2 class="sec-head fade-in">Let's look at this properly.</h2>
+    <div class="comp-grid" id="compGrid">
+      <div class="ch cat">Category</div>
+      <div class="ch ls">La Salle<br><small style="font-size:.72rem;font-family:'Lora',serif;color:var(--text2);font-style:italic">Philadelphia</small></div>
+      <div class="ch pc">Pace<br><small style="font-size:.72rem;font-family:'Lora',serif">New York City ✨</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 3: REAL NUMBERS ──────────────────────── -->
+<section id="s3">
+  <div style="display:flex;flex-direction:column;align-items:center;width:100%;max-width:580px">
+    <h2 class="sec-head fade-in">What 4 years actually costs.</h2>
+
+    <div class="bars-row" id="barsRow">
+      <div class="bar-item">
+        <div class="bar-outer">
+          <div class="bar-in pc" id="barPc"><span class="bar-amt">$150,940</span></div>
+        </div>
+        <div class="bar-lbl">Pace University</div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-outer">
+          <div class="bar-in ls" id="barLs"><span class="bar-amt">$218,340</span></div>
+        </div>
+        <div class="bar-lbl">La Salle University</div>
+      </div>
+    </div>
+
+    <div class="callout fade-in">Pace saves you approximately <strong>$67,400</strong> over 4 years. 💛</div>
+
+    <p class="breakdown fade-in">
+      Pace: $170,940 tuition − $20,000 scholarship = <strong>$150,940 total</strong><br>
+      La Salle: $175,140 tuition + $43,200 estimated housing = <strong>$218,340 total</strong><br>
+      Housing estimated at $900/month over 48 months.
+    </p>
+
+    <div class="stat-row fade-in">
+      <div class="stat-c">
+        <div class="stat-n">$20,000</div>
+        <div class="stat-d">Scholarship benefit<br>$5,000/year × 4 years saved</div>
+      </div>
+      <div class="stat-c">
+        <div class="stat-n">$43,200</div>
+        <div class="stat-d">Housing benefit<br>$0 vs ~$43,200 over 4 years</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 4: LOVE LETTER ──────────────────────── -->
+<section id="s4">
+  <div class="fade-in letter-wrap">
+    <div class="orn">✦ ♥ ✦</div>
+    <div class="letter-border">
+      <div class="letter-t">
+        <p>Okay with some analysis, La Salle still looks sort of better from the stats.... But all the jokes about the program losing funding, low professor retention rate, the cost, Philadelphiaaa... I think you're good!!! Plus, with the way so many PsyD students say how excited they are to work with children regardless, and how you said adults are just bleh to work with most of the time, you're going to get so much value from Pace's program!</p>
+        <p>Moving on from the Discussion of the analysis! Sujana, I hope you haven't gotten tired of hearing how proud I am of you. I swear this is the last thing! I made this as a silly way of convincing you to stay in New York and not go to Philadelphia, even though I obviously want what's best for you and would have wanted you to do whatever would have been the better choice for you. Like "noooo don't gooo I'm gonna miss youuu :c". When you texted/called me that Wednesday before we visited Pace and told me how you were leaning towards Pace, I was so surprised and not gonna lie, selfishly relieved. I'm so happy I took off work to go with you and see the campus and the building with you (that girl you had the meeting with was BUGGING fr). I'm even happier that you yourself fit and connect so well with the program and that you know you'll be successful with it.</p>
+        <p>I told you that I wanted to "crunch the numbers" for you and you kind of just used chatgpt to do it :c. But I made this very rough and very not final version specifically for you!! I hope you liked it, even though it's really silly sending it to you after you've already committed. I was also just a little nervousss. But you paid your deposit today so I just wanted to show you what I made!!</p>
+        <p>I love you a lot Sujana and I'm so happy and relieved we won't be states apart. I'm excited that we still get to spend time together trying new food and coffees and random things in Manhattan, Brooklyn, Queens, or long island, or even possibly at each other's homes (I WILL have a productivity session on your setup!!).</p>
+        <p>So once again (not one last time), I'm so proud of you my jaan and so excited you're staying in the city. Keep this html file as your first ever (i think idk) virtual card!! 🩺💛</p>
+      </div>
+      <div class="letter-sig">— Poopcar</div>
+    </div>
+    <div class="hearts-end" id="heartsEnd"></div>
+  </div>
+</section>
+
+<script>
+// ── COMPARISON DATA ────────────────────────────────────────────
+var rows = [
+  {cat:'Cost Per Credit',emo:false,
+   ls:{v:'~$1,390',b:90,rose:true},pc:{v:'~$1,540',b:100,rose:false,badge:null}},
+  {cat:'Number of Credits',emo:false,
+   ls:{v:'126 credits',b:100,rose:true},pc:{v:'111 credits',b:88,rose:false,badge:'p'}},
+  {cat:'Total Tuition',emo:false,
+   ls:{v:'$175,140',b:100,rose:true},pc:{v:'~$170,940',b:97.6,rose:false,badge:'p'}},
+  {cat:'APA Internship Match Rate',emo:false,
+   ls:{v:'15/15 — 100%',b:100,rose:false},pc:{v:'14/16 — 87.5%',b:87,rose:false,badge:null}},
+  {cat:'EPPP Pass Rate',emo:false,
+   ls:{v:'87.50%',b:100,rose:false},pc:{v:'77.33%',b:89,rose:false,badge:'l'}},
+  {cat:'Scholarship',emo:false,
+   ls:{v:'$0',b:0,rose:true},pc:{v:'$5,000/year',b:100,rose:false,badge:'p'}},
+  {cat:'Housing Cost',emo:false,
+   ls:{v:'~$900/mo',b:100,rose:true},pc:{v:'$0 (family 🏠)',b:0,rose:false,badge:'p'}},
+  {cat:'Cooking & Chores',emo:true,
+   ls:{v:'Only you... Ik you get lazy',b:null},pc:{v:'Your family got you!!',b:null,badge:'p'}},
+  {cat:'Distance from family',emo:true,
+   ls:{v:'Far',b:null},pc:{v:'Close',b:null,badge:'p'}},
+  {cat:'Distance from Mishti car',emo:true,
+   ls:{v:'Really far',b:null},pc:{v:'Right there',b:null,badge:'p'}},
+  {cat:'Distance from me 🧑🏽‍🦲🐥',
+   ls:{v:'Super far (weekends only)',b:null},pc:{v:'Same city!!!',b:null,badge:'p'}},
+];
+
+function badge(t){
+  if(!t) return '';
+  if(t==='p') return '<span class="badge bp">✨ Pace</span>';
+  if(t==='l') return '<span class="badge bl">➡ La Salle</span>';
+  return '';
+}
+function mbar(pct,rose){
+  if(pct===null||pct===undefined) return '';
+  return '<div class="mbar-w"><div class="mbar'+(rose?' rs':'')+'" style="width:'+pct+'%"></div></div>';
+}
+
+function showCompRows(){
+  document.querySelectorAll('.cr-cat,.cr-ls,.cr-pc').forEach(function(c){
+    c.style.opacity='1';
+    c.style.transform='translateX(0)';
+  });
+}
+
+function buildRows(){
+  var g=document.getElementById('compGrid');
+  var last=rows.length-1;
+  rows.forEach(function(r,i){
+    var noBorder=i===last?';border-bottom:none':'';
+    var emo=r.emo?' emo':'';
+    var delay=i*80;
+
+    var cat=document.createElement('div');
+    cat.className='cr-cat'+emo;
+    cat.style.cssText='border-bottom:1px solid var(--border)'+noBorder+';opacity:0;transform:translateX(-10px);transition:opacity .5s ease '+delay+'ms,transform .5s ease '+delay+'ms';
+    cat.textContent=r.cat;
+
+    var ls=document.createElement('div');
+    ls.className='cr-ls'+emo;
+    ls.style.cssText='border-bottom:1px solid var(--border)'+noBorder+';opacity:0;transform:translateX(-6px);transition:opacity .5s ease '+(delay+30)+'ms,transform .5s ease '+(delay+30)+'ms';
+    ls.innerHTML='<div class="cell-in"><div class="cell-v">'+r.ls.v+'</div>'+mbar(r.ls.b,r.ls.rose)+'</div>';
+
+    var pc=document.createElement('div');
+    pc.className='cr-pc'+emo;
+    pc.style.cssText='border-bottom:1px solid var(--border)'+noBorder+';opacity:0;transform:translateX(-6px);transition:opacity .5s ease '+(delay+60)+'ms,transform .5s ease '+(delay+60)+'ms';
+    pc.innerHTML='<div class="cell-in"><div class="cell-v">'+r.pc.v+badge(r.pc.badge)+'</div>'+mbar(r.pc.b,false)+'</div>';
+
+    g.appendChild(cat);
+    g.appendChild(ls);
+    g.appendChild(pc);
+  });
+}
+buildRows();
+
+// ── FALLBACK: show everything after 1.2s for QuickLook / no-scroll envs ──
+var allRevealed = false;
+function revealAll(){
+  if(allRevealed) return;
+  allRevealed = true;
+  showCompRows();
+  document.querySelectorAll('.fade-in').forEach(function(el){
+    el.classList.add('visible');
+  });
+  // Bars: compute proportional heights from actual container
+  animateBars();
+  document.getElementById('heroText').classList.add('open');
+  document.getElementById('carWrap').classList.add('open');
+}
+setTimeout(revealAll, 1200);
+
+// ── PARTICLES ──────────────────────────────────────────────────
+(function(){
+  var c=document.getElementById('particles');
+  var chars=['♥','✦','♥','✦','♥','✦'];
+  for(var i=0;i<20;i++){
+    var p=document.createElement('span');
+    p.className='ptcl';
+    var op=(0.1+Math.random()*0.18).toFixed(2);
+    var col=Math.random()>.5?'var(--accent)':'var(--rose)';
+    p.textContent=chars[i%chars.length];
+    p.style.cssText='left:'+(Math.random()*100)+'%;--op:'+op+';font-size:'+(9+Math.random()*9)+'px;animation-duration:'+(9+Math.random()*11)+'s;animation-delay:'+(Math.random()*9)+'s;color:'+col;
+    c.appendChild(p);
+  }
+})();
+
+// ── ENVELOPE OPEN ───────────────────────────────────────────────
+setTimeout(function(){
+  document.getElementById('envFlap').classList.add('open');
+  document.getElementById('envSeal').style.opacity='0';
+  setTimeout(function(){
+    document.getElementById('envCard').classList.add('open');
+    document.getElementById('heroText').classList.add('open');
+    document.getElementById('carWrap').classList.add('open');
+  },700);
+},1500);
+
+// ── PIXEL ART CAR ───────────────────────────────────────────────
+(function(){
+  var canvas=document.getElementById('carCanvas');
+  var ctx=canvas.getContext('2d');
+  var S=4;
+  var W=canvas.width/S;
+  var H=canvas.height/S;
+  var carX=W+2;
+  var frame=0;
+
+  function px(ax,ay,col){
+    if(ax<0||ax>=W||ay<0||ay>=H) return;
+    ctx.fillStyle=col;
+    ctx.fillRect(ax*S,ay*S,S,S);
+  }
+  function rect(x1,y1,x2,y2,col){
+    for(var x=x1;x<=x2;x++) for(var y=y1;y<=y2;y++) px(x,y,col);
+  }
+  function circle(cx,cy,r,col,innerCol){
+    for(var dx=-r;dx<=r;dx++)
+      for(var dy=-r;dy<=r;dy++)
+        if(dx*dx+dy*dy<=r*r+0.5)
+          px(cx+dx,cy+dy,dx*dx+dy*dy<=0.5?innerCol:col);
+  }
+  function drawWheel(cx,cy,f){
+    circle(cx,cy,3,'#2a2a2a','#666');
+    for(var i=0;i<3;i++){
+      var a=f*0.18+(i*Math.PI*2/3);
+      var sx=Math.round(Math.cos(a)*2);
+      var sy=Math.round(Math.sin(a)*2);
+      px(cx+sx,cy+sy,'#aaa');
+      px(cx,cy,'#888');
+    }
+  }
+  function drawCar(ox,bounce){
+    var b=bounce;
+    rect(ox+2,11+b,ox+43,18+b,'#141414');
+    rect(ox+9,5+b,ox+34,11+b,'#141414');
+    rect(ox+37,8+b,ox+43,11+b,'#141414');
+    rect(ox+40,7+b,ox+43,8+b,'#141414');
+    rect(ox+2,8+b,ox+8,11+b,'#141414');
+    rect(ox+2,7+b,ox+5,8+b,'#141414');
+    rect(ox+10,6+b,ox+17,10+b,'#87CEFA');
+    rect(ox+19,6+b,ox+32,10+b,'#87CEFA');
+    rect(ox+18,6+b,ox+18,10+b,'#141414');
+    rect(ox+11,6+b,ox+14,9+b,'#8B6040');
+    rect(ox+10,6+b,ox+15,6+b,'#1a0a00');
+    px(ox+10,7+b,'#1a0a00');
+    px(ox+15,7+b,'#1a0a00');
+    px(ox+12,8+b,'#3D2B1F');
+    rect(ox+42,12+b,ox+43,13+b,'#FFFAB0');
+    rect(ox+2,12+b,ox+3,13+b,'#FF3333');
+    for(var y=12+b;y<=17+b;y++){
+      px(ox+9,y,'#1e1e1e');
+      px(ox+18,y,'#1e1e1e');
+      px(ox+35,y,'#1e1e1e');
+    }
+    rect(ox+4,18+b,ox+41,18+b,'#0a0a0a');
+    drawWheel(ox+9,21+b,frame);
+    drawWheel(ox+36,21+b,frame);
+  }
+  function drawScene(){
+    ctx.fillStyle='#EEF7EE';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle='#D4E8D4';
+    ctx.beginPath();ctx.ellipse(60,H*S,90,28,0,Math.PI,0);ctx.fill();
+    ctx.beginPath();ctx.ellipse(200,H*S,120,22,0,Math.PI,0);ctx.fill();
+    ctx.beginPath();ctx.ellipse(310,H*S,80,18,0,Math.PI,0);ctx.fill();
+    ctx.fillStyle='#C8B89A';
+    ctx.fillRect(0,26*S,canvas.width,4*S);
+    ctx.fillStyle='#B8A88A';
+    ctx.fillRect(0,26*S,canvas.width,S);
+    ctx.fillStyle='#E8D8B0';
+    var dashOff=-(frame*2)%40;
+    for(var x=dashOff;x<canvas.width;x+=40) ctx.fillRect(x,28*S,22,S);
+    var bounce=Math.floor(frame/10)%2===0?0:-1;
+    drawCar(Math.floor(carX),bounce);
+  }
+  function loop(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    drawScene();
+    carX-=0.55;
+    if(carX<-48) carX=W+4;
+    frame++;
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+// ── BAR ANIMATION ───────────────────────────────────────────────
+// Heights computed from actual container to prevent mobile overflow
+var barsAnimated = false;
+function animateBars(){
+  if(barsAnimated) return;
+  barsAnimated = true;
+  var outerH = document.querySelector('.bar-outer').offsetHeight;
+  if(!outerH || outerH < 10) outerH = 290; // sensible default
+  var paceH = Math.round((150940/218340) * outerH);
+  document.getElementById('barPc').style.height = paceH + 'px';
+  document.getElementById('barLs').style.height = outerH + 'px';
+}
+
+// ── INTERSECTION OBSERVERS ─────────────────────────────────────
+var sections=document.querySelectorAll('section');
+var dots=document.querySelectorAll('.nav-dot');
+
+// active dot tracking
+var secObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      var id=e.target.id;
+      dots.forEach(function(d){d.classList.toggle('active',d.dataset.sec===id)});
+    }
+  });
+},{threshold:0.4});
+sections.forEach(function(s){secObs.observe(s)});
+
+// fade-in elements
+var fadeObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('visible');fadeObs.unobserve(e.target)}
+  });
+},{threshold:0.02});
+document.querySelectorAll('.fade-in').forEach(function(el){fadeObs.observe(el)});
+
+// comparison rows stagger — fires as soon as grid edge enters viewport
+var compObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      showCompRows();
+      compObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.02});
+compObs.observe(document.getElementById('compGrid'));
+
+// bar chart
+var barObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      animateBars();
+      barObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.1});
+barObs.observe(document.getElementById('barsRow'));
+
+// ── NAV DOT CLICKS ─────────────────────────────────────────────
+dots.forEach(function(d){
+  d.addEventListener('click',function(){
+    var t=document.getElementById(d.dataset.sec);
+    if(t) t.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// ── FINAL HEARTS ───────────────────────────────────────────────
+(function(){
+  var c=document.getElementById('heartsEnd');
+  for(var i=0;i<14;i++){
+    var h=document.createElement('span');
+    h.className='fheart';
+    h.textContent='♥';
+    h.style.cssText='left:'+(3+Math.random()*94)+'%;animation-duration:'+(3+Math.random()*3.5)+'s;animation-delay:'+(Math.random()*5)+'s;font-size:'+(11+Math.random()*11)+'px';
+    c.appendChild(h);
+  }
+})();
+</script>
+</body>
+</html>
